@@ -1,0 +1,67 @@
+# MySQL.  Versions 4.1 and 5.0 are recommended.
+#
+# Install the MYSQL driver
+#   gem install mysql2
+#
+# Ensure the MySQL gem is defined in your Gemfile
+#   gem 'mysql2'
+#
+# And be sure to use new-style password hashing:
+#   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
+development:
+  adapter: mysql2
+  encoding: utf8mb4
+  database: edcast_qa
+  pool: 5
+  username: root
+  password:
+  # customized for different installations of MySql.
+  # Find the first sock that exists and connect through it.
+  socket: <%= ['/opt/local/var/run/mysql5/mysqld.sock','/opt/local/var/run/mysql55/mysqld.sock','/opt/local/var/run/mysqld/mysqld.sock','/var/run/mysqld/mysqld.sock','/tmp/mysql.sock'].select { |f| File.exist? f }.first %>
+  # If none of the above works, comment the entire socket part
+  # and uncomment the following line. Same works for test database.
+  # host: localhost
+  reconnect: true
+
+edcast_development:
+  adapter: mysql2
+  encoding: utf8mb4
+  database: edcast_qa
+  pool: 5
+  username: root
+  password:
+  # customized for different installations of MySql.
+  # Find the first sock that exists and connect through it.
+  socket: <%= ['/opt/local/var/run/mysql5/mysqld.sock','/opt/local/var/run/mysql55/mysqld.sock','/opt/local/var/run/mysqld/mysqld.sock','/var/run/mysqld/mysqld.sock','/tmp/mysql.sock'].select { |f| File.exist? f }.first %>
+  # If none of the above works, comment the entire socket part
+  # and uncomment the following line. Same works for test database.
+  # host: localhost
+  reconnect: true
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test: &test
+  adapter: mysql2
+  encoding: utf8mb4
+  database: edcast_test1
+  pool: 5
+  username: root
+  password:
+  socket: <%= ['/opt/local/var/run/mysql5/mysqld.sock','/opt/local/var/run/mysql55/mysqld.sock','/opt/local/var/run/mysqld/mysqld.sock','/var/run/mysqld/mysqld.sock','/tmp/mysql.sock'].select { |f| File.exist? f }.first %>
+  # host: localhost
+
+staging:
+  url: <%= ENV['DATABASE_URL'] %>
+  pool: <%= ENV['DB_POOL'] || ENV['MAX_THREADS'] || 5 %>
+  checkout_timeout: <%= ENV['DB_CHECKOUT_TIMEOUT'] || 5 %>
+  reaping_frequency: <%= ENV['DB_REAP_FREQ'] || 10 %>
+
+production:
+  url: <%= ENV['DATABASE_URL'] %>
+  pool: <%= ENV['DB_POOL'] || ENV['MAX_THREADS'] || 5 %>
+  checkout_timeout: <%= ENV['DB_CHECKOUT_TIMEOUT'] || 5 %>
+  reaping_frequency: <%= ENV['DB_REAP_FREQ'] || 10 %>
+
+cucumber:
+  <<: *test

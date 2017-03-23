@@ -1,0 +1,8 @@
+development:
+  savannah_token: "361b27d7f98a123c67e8653a6a69f5cbc03a30c78e62bd41227647166679ed97c22698a7bf748b95d61bf2e88fd766ad75c937c18312a190ce0ae5bd04a0b59c"
+
+test:
+  savannah_token: 5cbb24441c56e38bc5ab5938f34b5f7aa3cc84a5d33c31570680c81348307f582e6d4ec5c036c595ca7236e336f4c1bb0e4e6277f95293b43446d5fb99cfc687
+
+production:
+  savannah_token: <%= ENV["SECRET_KEY_BASE"] %>

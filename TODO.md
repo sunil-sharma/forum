@@ -1,0 +1,2 @@
+- Setup bugsnag 
+ - replace puts with log.error
